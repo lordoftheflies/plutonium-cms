@@ -29,9 +29,9 @@ CMS related components.
         <h1>[[contentModel.title]]</h1>
         <template is="dom-repeat" items="{{contentModel.sections}}" as="s">
             <iron-pages class="field-displays" selected="{{s.type}}" attr-for-selected="name" fallback-selection="unknown">
-                <plutonium-cms-image-display contentModel="[[s]]" name="image"></plutonium-cms-image-display>
-                <plutonium-cms-text-display contentModel="[[s]]" name="text"></plutonium-cms-text-display>
-                <plutonium-cms-video-display contentModel="[[s]]" name="video"></plutonium-cms-video-display>
+                <plutonium-cms-image-display content-model="[[s]]" name="image"></plutonium-cms-image-display>
+                <plutonium-cms-text-display content-model="[[s]]" name="text"></plutonium-cms-text-display>
+                <plutonium-cms-video-display content-model="[[s]]" name="video"></plutonium-cms-video-display>
                 <div name="unknown">This section of content is not displayable.</div>
             </iron-pages>
         </template>

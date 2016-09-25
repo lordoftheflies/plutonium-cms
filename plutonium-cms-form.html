@@ -67,7 +67,7 @@ CMS related components.
                 }
             },
             indexOfSection: function (name) {
-                var s = this.sections;
+                var s = this.contentModel.sections;
                 var index = s.indexOf(
                         s.filter(function (section) {
                             return (section.name === name);
@@ -75,32 +75,32 @@ CMS related components.
                 return index;
             },
             createTextSection: function () {
-                this.push('sections', {
-                    name: this.sections.length,
+                this.push('contentModel.sections', {
+                    name: this.contentModel.sections.length,
                     type: "text",
                     title: null,
                     text: null
                 });
             },
             createVideoSection: function () {
-                this.push('sections', {
-                    name: this.sections.length,
+                this.push('contentModel.sections', {
+                    name: this.contentModel.sections.length,
                     type: "video",
                     title: null,
                     text: null
                 });
             },
             createImageSection: function () {
-                this.push('sections', {
-                    name: this.sections.length,
+                this.push('contentModel.sections', {
+                    name: this.contentModel.sections.length,
                     type: "image",
                     title: null,
                     text: null
                 });
             },
             createLinkSection: function () {
-                this.push('sections', {
-                    name: this.sections.length,
+                this.push('contentModel.sections', {
+                    name: this.contentModel.sections.length,
                     type: "link",
                     title: null,
                     text: null
@@ -110,45 +110,45 @@ CMS related components.
                 var index = this.indexOfSection(detail.name);
                 var s = [];
                 if (index - 1 >= 0) {
-                    s = this.splice('sections', index - 1, this.sections.length - index + 1);
+                    s = this.splice('contentModel.sections', index - 1, this.contentModel.sections.length - index + 1);
                     var first = s[0];
                     var second = s[1];
                     var tail = s.filter(function (value, index, arr) {
                         return index > 1;
                     }, this);
-                    this.push('sections', second, first);
+                    this.push('contentModel.sections', second, first);
                     tail.forEach(function (value, index, arr) {
-                        this.push('sections', value);
+                        this.push('contentModel.sections', value);
                     }, this);
                 } else {
-                    s = this.splice('sections', 0, 1);
-                    this.push('sections', s[0]);
+                    s = this.splice('contentModel.sections', 0, 1);
+                    this.push('contentModel.sections', s[0]);
                 }
             },
             onMoveDownSection: function (event, detail) {
                 var index = this.indexOfSection(detail.name);
                 var s = [];
-                if (index < this.sections.length - 1) {
-                    s = this.splice('sections', index, this.sections.length - index);
+                if (index < this.contentModel.sections.length - 1) {
+                    s = this.splice('contentModel.sections', index, this.contentModel.sections.length - index);
                     var first = s[0];
                     var second = s[1];
                     var tail = s.filter(function (value, index, arr) {
                         return index > 1;
                     }, this);
-                    this.push('sections', second, first);
+                    this.push('contentModel.sections', second, first);
                     tail.forEach(function (value, index, arr) {
-                        this.push('sections', value);
+                        this.push('contentModel.sections', value);
                     }, this);
                 } else {
-                    s = this.splice('sections', 0, this.sections.length - 1);
+                    s = this.splice('contentModel.sections', 0, this.sections.length - 1);
                     s.forEach(function (value, index, arr) {
-                        this.push('sections', value);
+                        this.push('contentModel.sections', value);
                     }, this);
                 }
             },
             onRemoveSection: function (event, detail) {
                 var index = this.indexOfSection(detail.name);
-                this.splice('sections', index, 1);
+                this.splice('contentModel.sections', index, 1);
             }
         });
     </script>
