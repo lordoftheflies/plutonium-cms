@@ -20,15 +20,15 @@ CMS related components.
                 margin: 10px;
             }
         </style>
-        <h2>[[model.title]]</h2>
-        <p>[[model.data]]</p>
+        <h2>[[contentModel.title]]</h2>
+        <p>[[contentModel.data]]</p>
     </template>
 
     <script>
         Polymer({
             is: 'plutonium-cms-text-display',
             properties: {
-                model: {
+                contentModel: {
                     type: Object,
                     notify: true
                 },

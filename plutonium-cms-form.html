@@ -23,8 +23,8 @@ CMS related components.
             }
         </style>
         <h1>[[title]]</h1>
-        <template is="dom-repeat" items="{{sections}}" as="section">
-            <plutonium-cms-field model="{{section}}"></plutonium-cms-field>
+        <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
+            <plutonium-cms-field content-model="{{section}}"></plutonium-cms-field>
         </template>
     </template>
 
@@ -36,14 +36,16 @@ CMS related components.
                     type: String,
                     notify: true
                 },
-                sections: {
-                    type: Array,
+                contentModel: {
+                    type: Object,
                     notify: true,
-                    value: []
+                    value: {
+                        sections: []
+                    }
                 },
             },
             observers: [
-                'sectionsAddedOrRemoved(sections.splices)'
+                'sectionsAddedOrRemoved(contentModel.sections.splices)'
             ],
             listeners: {
                 'moveup-section': 'onMoveUpSection',

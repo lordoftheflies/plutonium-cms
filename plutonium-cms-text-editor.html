@@ -25,8 +25,8 @@ CMS related components.
         </style>
         <h2>Edit text properties</h2>
         <div class="card-content">
-            <paper-input label="Title" name="title" value="{{model.title}}"></paper-input>
-            <paper-textarea label="Text" name="text" value="{{model.data}}"></paper-textarea>
+            <paper-input label="Title" name="title" value="{{contentModel.title}}"></paper-input>
+            <paper-textarea label="Text" name="text" value="{{contentModel.data}}"></paper-textarea>
         </div>
     </template>
 
@@ -34,7 +34,7 @@ CMS related components.
         Polymer({
             is: 'plutonium-cms-text-editor',
             properties: {
-                model: {
+                contentModel: {
                     type: Object,
                     notify: true,
                 },

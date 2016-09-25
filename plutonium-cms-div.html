@@ -26,12 +26,12 @@ CMS related components.
                 margin: 10px;
             }
         </style>
-        <h1>[[model.title]]</h1>
-        <template is="dom-repeat" items="{{model.sections}}" as="s">
+        <h1>[[contentModel.title]]</h1>
+        <template is="dom-repeat" items="{{contentModel.sections}}" as="s">
             <iron-pages class="field-displays" selected="{{s.type}}" attr-for-selected="name" fallback-selection="unknown">
-                <plutonium-cms-image-display model="[[s]]" name="image"></plutonium-cms-image-display>
-                <plutonium-cms-text-display model="[[s]]" name="text"></plutonium-cms-text-display>
-                <plutonium-cms-video-display model="[[s]]" name="video"></plutonium-cms-video-display>
+                <plutonium-cms-image-display contentModel="[[s]]" name="image"></plutonium-cms-image-display>
+                <plutonium-cms-text-display contentModel="[[s]]" name="text"></plutonium-cms-text-display>
+                <plutonium-cms-video-display contentModel="[[s]]" name="video"></plutonium-cms-video-display>
                 <div name="unknown">This section of content is not displayable.</div>
             </iron-pages>
         </template>
@@ -45,7 +45,7 @@ CMS related components.
                     type: String,
                     notify: true
                 },
-                model: {
+                contentModel: {
                     type: Object,
                     notify: true,
                     value: {
@@ -54,7 +54,7 @@ CMS related components.
                 },
             },
             observers: [
-                'sectionsAddedOrRemoved(model.sections.splices)'
+                'sectionsAddedOrRemoved(contentModel.sections.splices)'
             ],
             sectionsAddedOrRemoved: function (changeRecord) {
                 if (changeRecord) {
@@ -71,7 +71,7 @@ CMS related components.
                 }
             },
             indexOfSection: function (name) {
-                var s = this.model.sections;
+                var s = this.contentModel.sections;
                 var index = s.indexOf(
                         s.filter(function (section) {
                             return (section.name === name);

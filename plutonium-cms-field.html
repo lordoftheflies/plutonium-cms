@@ -83,10 +83,10 @@ CMS related components.
 
         </style>
 
-        <iron-pages class="field-displays" selected="{{model.type}}" attr-for-selected="name" fallback-selection="unknown">
-            <plutonium-cms-image-display model="[[model]]" name="image"></plutonium-cms-image-display>
-            <plutonium-cms-text-display model="[[model]]" name="text"></plutonium-cms-text-display>
-            <plutonium-cms-video-display model="[[model]]" name="video"></plutonium-cms-video-display>
+        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown">
+            <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
+            <plutonium-cms-text-display content-model="[[contentModel]]" name="text"></plutonium-cms-text-display>
+            <plutonium-cms-video-display content-model="[[contentModel]]" name="video"></plutonium-cms-video-display>
             <div name="unknown">This section of content is not displayable.</div>
         </iron-pages>
 
@@ -94,10 +94,10 @@ CMS related components.
 
             <paper-material class="dropdown-content layout horizontal" elevation="2">
                 <!--<div class="layout horizontal">-->
-                <iron-pages selected="{{model.type}}" attr-for-selected="name" fallback-selection="unknown" class="flex">
-                    <plutonium-cms-image-editor model="{{model}}" name="image"></plutonium-cms-image-editor>
-                    <plutonium-cms-text-editor model="{{model}}" name="text"></plutonium-cms-text-editor>
-                    <plutonium-cms-video-editor model="{{model}}" name="video"></plutonium-cms-video-editor>
+                <iron-pages selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown" class="flex">
+                    <plutonium-cms-image-editor content-model="{{contentModel}}" name="image"></plutonium-cms-image-editor>
+                    <plutonium-cms-text-editor content-model="{{contentModel}}" name="text"></plutonium-cms-text-editor>
+                    <plutonium-cms-video-editor content-model="{{contentModel}}" name="video"></plutonium-cms-video-editor>
                     <div name="unknown">This section of content is not editable.</div>
                 </iron-pages>
                 <div class="layout vertical">
@@ -117,27 +117,27 @@ CMS related components.
         Polymer({
             is: 'plutonium-cms-field',
             properties: {
-                model: {
+                contentModel: {
                     type: Object,
                     notify: true
                 }
             },
             attached: function () {
-                console.log(this.is, 'create field=' + this.model.type);
+                console.log(this.is, 'create field=' + this.contentModel.type);
             },
             onMoveUp: function (event, details) {
                 this.fire('moveup-section', {
-                    name: this.model.name
+                    name: this.contentModel.name
                 });
             },
             onMoveDown: function (event, details) {
                 this.fire('movedown-section', {
-                    name: this.model.name
+                    name: this.contentModel.name
                 });
             },
             onRemove: function (event, details) {
                 this.fire('remove-section', {
-                    name: this.model.name
+                    name: this.contentModel.name
                 });
             }
         });

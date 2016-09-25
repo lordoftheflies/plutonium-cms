@@ -20,8 +20,8 @@ CMS related components.
                 margin: 10px;
             }
         </style>
-        <h2>[[model.title]]</h2>
-        <video width="{{model.properties.width}}" height="{{model.properties.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
+        <h2>[[contentModel.title]]</h2>
+        <video width="{{contentModel.properties.width}}" height="{{contentModel.properties.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
     </template>
 
     <script>
@@ -34,13 +34,13 @@ CMS related components.
                 },
             },
             observers: [
-                'observeVideoUrl(model.data)'
+                'observeVideoUrl(contentModel.data)'
             ],
             ready: function () {
 //                this.$.player.mediaelementplayer(/* Options */);
             },
             observeVideoUrl: function (data) {
-//                console.log(this.is + ' observe model data.');
+//                console.log(this.is + ' observe contentModel data.');
                 if (data) {
                     var isYoutube = data && data.match(/(?:youtu|youtube)(?:\.com|\.be)\/([\w\W]+)/i);
                     if (isYoutube) {
@@ -53,7 +53,7 @@ CMS related components.
                 }
 
 
-                //                this.$.modelData.innerHTML = data;
+                //                this.$.contentModelData.innerHTML = data;
             },
         });
     </script>
