@@ -1,0 +1,38 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`plutonium-cms-text-display`
+CMS related components.
+
+@demo demo/index_text.html 
+-->
+
+<dom-module id="plutonium-cms-text-display">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            :host p {
+                margin: 10px;
+            }
+            :host h2 {
+                margin: 10px;
+            }
+        </style>
+        <h2>[[model.title]]</h2>
+        <p>[[model.data]]</p>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-text-display',
+            properties: {
+                model: {
+                    type: Object,
+                    notify: true
+                },
+            },
+        });
+    </script>
+</dom-module>

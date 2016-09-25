@@ -1,0 +1,60 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`plutonium-cms-video-display`
+CMS related components.
+
+@demo demo/index_video.html 
+-->
+
+<dom-module id="plutonium-cms-video-display">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            :host video {
+                margin: 10px;
+            }
+            :host h2 {
+                margin: 10px;
+            }
+        </style>
+        <h2>[[model.title]]</h2>
+        <video width="{{model.properties.width}}" height="{{model.properties.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-video-display',
+            properties: {
+                prop1: {
+                    type: String,
+                    value: 'plutonium-cms-video-display',
+                },
+            },
+            observers: [
+                'observeVideoUrl(model.data)'
+            ],
+            ready: function () {
+//                this.$.player.mediaelementplayer(/* Options */);
+            },
+            observeVideoUrl: function (data) {
+//                console.log(this.is + ' observe model data.');
+                if (data) {
+                    var isYoutube = data && data.match(/(?:youtu|youtube)(?:\.com|\.be)\/([\w\W]+)/i);
+                    if (isYoutube) {
+                        var id = isYoutube[1].match(/watch\?v=|[\w\W]+/gi);
+                        id = (id.length > 1) ? id.splice(1) : id;
+                        id = id.toString();
+                        var mp4url = "http://www.youtubeinmp4.com/redirect.php?video=";
+                        this.videoSrc = mp4url + id;
+                    }
+                }
+
+
+                //                this.$.modelData.innerHTML = data;
+            },
+        });
+    </script>
+</dom-module>

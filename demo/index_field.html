@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+    <head>
+        <title>plutonium-cms demo</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+
+        <link rel="import" href="../plutonium-cms.html">
+
+        <style is="custom-style" include="demo-pages-shared-styles">
+        </style>
+    </head>
+    <body>
+
+        <div class="vertical-section-container centered">
+            <h3>Basic plutonium-cms Demo</h3>
+            <demo-snippet>
+                <template>
+                    <plutonium-cms-field model='{"type": "text", "title": "Lorem ipsum", "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in porta tellus. Cras et quam neque. Vestibulum nibh massa, mattis id tincidunt et, vestibulum eget magna. In dignissim sed elit et semper. Curabitur turpis nunc, efficitur vitae faucibus a, ultricies sed urna. Nullam sollicitudin arcu et lacus egestas tincidunt. Sed eu ipsum augue. Donec ante nibh, rhoncus et commodo eu, dignissim id nisi. Nam aliquam nunc vitae magna condimentum, eu semper magna fermentum. Morbi sapien ante, scelerisque eget consequat vitae, vestibulum sed quam. Ut vel eros turpis. Etiam nec sollicitudin nisi, at ullamcorper quam. Etiam et ipsum maximus tellus finibus imperdiet. Ut tempus in leo hendrerit vulputate. Praesent euismod odio rutrum ligula tempus, et scelerisque eros elementum."}'></plutonium-cms-field>
+                    <plutonium-cms-field model='{"type": "link", "title": "Flavon külső link", "data": "http://www.flowinghealth.co.uk/thrive-with-joy-and-flavon.html#.V-fZgXV97CI"}'></plutonium-cms-field>
+                    <plutonium-cms-field model='{"type": "image", "title": "Itt egy kép", "data": "http://www.flowinghealth.co.uk/js/plugins/imagemanager/files/flavon-max.jpg", "properties": { "height": 300, "width": 400 }}'></plutonium-cms-field>
+                    <plutonium-cms-field model='{"type": "video", "title": "WH:40K Inquisitor", "data": "https://www.youtube.com/watch?v=JjaYW5Cnr5k", "properties": { "height": 300, "width": 400 } }'></plutonium-cms-field>
+                </template>
+            </demo-snippet>
+        </div>
+
+    </body>
+</html>

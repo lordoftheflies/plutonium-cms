@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+
+<!--
+`plutonium-cms-text-editor`
+CMS related components.
+
+@demo demo/index_text.html 
+-->
+
+<dom-module id="plutonium-cms-text-editor">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+            }
+
+            :host .card-content {
+                margin: 10px;
+            }
+            :host h2 {
+                margin: 10px;
+            }
+        </style>
+        <h2>Edit text properties</h2>
+        <div class="card-content">
+            <paper-input label="Title" name="title" value="{{model.title}}"></paper-input>
+            <paper-textarea label="Text" name="text" value="{{model.data}}"></paper-textarea>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-text-editor',
+            properties: {
+                model: {
+                    type: Object,
+                    notify: true,
+                },
+            },
+        });
+    </script>
+</dom-module>

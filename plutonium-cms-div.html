@@ -1,0 +1,83 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+
+<link rel="import" href="plutonium-cms-image-display.html">
+<link rel="import" href="plutonium-cms-text-display.html">
+<link rel="import" href="plutonium-cms-video-display.html">
+
+<!--
+`plutonium-cms`
+CMS related components.
+
+@demo demo/index_div.html 
+-->
+
+<dom-module id="plutonium-cms-div">
+    <template>
+        <style include="iron-flex">
+            :host {
+                display: inline-block;
+                /*position: relative;*/
+                @apply(--layout-vertical);
+                /*@apply(--layout-flex);*/
+            }
+            :host h1 {
+                margin: 10px;
+            }
+        </style>
+        <h1>[[model.title]]</h1>
+        <template is="dom-repeat" items="{{model.sections}}" as="s">
+            <iron-pages class="field-displays" selected="{{s.type}}" attr-for-selected="name" fallback-selection="unknown">
+                <plutonium-cms-image-display model="[[s]]" name="image"></plutonium-cms-image-display>
+                <plutonium-cms-text-display model="[[s]]" name="text"></plutonium-cms-text-display>
+                <plutonium-cms-video-display model="[[s]]" name="video"></plutonium-cms-video-display>
+                <div name="unknown">This section of content is not displayable.</div>
+            </iron-pages>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-div',
+            properties: {
+                title: {
+                    type: String,
+                    notify: true
+                },
+                model: {
+                    type: Object,
+                    notify: true,
+                    value: {
+                        sections: []
+                    }
+                },
+            },
+            observers: [
+                'sectionsAddedOrRemoved(model.sections.splices)'
+            ],
+            sectionsAddedOrRemoved: function (changeRecord) {
+                if (changeRecord) {
+                    changeRecord.indexSplices.forEach(function (s) {
+                        s.removed.forEach(function (user) {
+                            console.log(user.name + ' was removed');
+                        });
+                        for (var i = 0; i < s.addedCount; i++) {
+                            var index = s.index + i;
+                            var newUser = s.object[index];
+                            console.log('section ' + newUser.name + ' added at index ' + index);
+                        }
+                    }, this);
+                }
+            },
+            indexOfSection: function (name) {
+                var s = this.model.sections;
+                var index = s.indexOf(
+                        s.filter(function (section) {
+                            return (section.name === name);
+                        }, this)[0]);
+                return index;
+            }
+        });
+    </script>
+</dom-module>

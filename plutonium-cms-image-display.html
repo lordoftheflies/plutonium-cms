@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../iron-image/iron-image.html">
+
+<!--
+`plutonium-cms-image-display`
+CMS related components.
+
+@demo demo/index_image.html 
+-->
+
+<dom-module id="plutonium-cms-image-display">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            
+            :host h2 {
+                margin: 10px;
+            }
+            
+            :host iron-image {
+                margin: 10px;
+                width: 100%;
+                min-height: 20px;
+            }
+        </style>
+        <h2>[[model.title]]</h2>
+        <iron-image src="[[model.data]]" sizing="cover" style="width:{{model.properties.width}}px; height:{{model.properties.height}}px;"></iron-image>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-image-display',
+            properties: {
+                prop1: {
+                    type: String,
+                    value: 'plutonium-cms-image-display',
+                },
+            },
+        });
+    </script>
+</dom-module>

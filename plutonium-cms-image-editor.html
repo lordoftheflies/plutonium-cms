@@ -1,0 +1,45 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<!--
+`plutonium-cms-image-editor`
+CMS related components.
+
+@demo demo/index_image.html 
+-->
+
+<dom-module id="plutonium-cms-image-editor">
+    <template>
+        <style>
+            :host {
+                display: inline-block;
+            }
+
+            :host .card-content {
+                margin: 10px;
+            }
+            :host h2 {
+                margin: 10px;
+            }
+        </style>
+        <h2>Edit image properties</h2>
+        <div class="card-content">
+            <paper-input label="Title" name="title" value="{{model.title}}"></paper-input>
+            <paper-input label="Url" name="src" value="{{model.data}}"></paper-input>
+            <paper-input label="Width" name="width" value="{{model.properties.width}}"></paper-input>
+            <paper-input label="Height" name="height" value="{{model.properties.height}}"></paper-input>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-image-editor',
+            properties: {
+                prop1: {
+                    type: String,
+                    value: 'plutonium-cms-image-editor',
+                },
+            },
+        });
+    </script>
+</dom-module>

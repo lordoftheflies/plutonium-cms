@@ -1,0 +1,153 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="plutonium-cms-field.html">
+
+<!--
+`plutonium-cms`
+CMS related components.
+
+@demo demo/index_form.html 
+-->
+
+<dom-module id="plutonium-cms-form">
+    <template>
+        <style include="iron-flex">
+            :host {
+                display: inline-block;
+                /*position: relative;*/
+                @apply(--layout-vertical);
+                /*@apply(--layout-flex);*/
+            }
+            :host h1 {
+                margin: 10px;
+            }
+        </style>
+        <h1>[[title]]</h1>
+        <template is="dom-repeat" items="{{sections}}" as="section">
+            <plutonium-cms-field model="{{section}}"></plutonium-cms-field>
+        </template>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-form',
+            properties: {
+                title: {
+                    type: String,
+                    notify: true
+                },
+                sections: {
+                    type: Array,
+                    notify: true,
+                    value: []
+                },
+            },
+            observers: [
+                'sectionsAddedOrRemoved(sections.splices)'
+            ],
+            listeners: {
+                'moveup-section': 'onMoveUpSection',
+                'movedown-section': 'onMoveDownSection',
+                'remove-section': 'onRemoveSection'
+            },
+            sectionsAddedOrRemoved: function (changeRecord) {
+                if (changeRecord) {
+                    changeRecord.indexSplices.forEach(function (s) {
+                        s.removed.forEach(function (user) {
+                            console.log(user.name + ' was removed');
+                        });
+                        for (var i = 0; i < s.addedCount; i++) {
+                            var index = s.index + i;
+                            var newUser = s.object[index];
+                            console.log('section ' + newUser.name + ' added at index ' + index);
+                        }
+                    }, this);
+                }
+            },
+            indexOfSection: function (name) {
+                var s = this.sections;
+                var index = s.indexOf(
+                        s.filter(function (section) {
+                            return (section.name === name);
+                        }, this)[0]);
+                return index;
+            },
+            createTextSection: function () {
+                this.push('sections', {
+                    name: this.sections.length,
+                    type: "text",
+                    title: null,
+                    text: null
+                });
+            },
+            createVideoSection: function () {
+                this.push('sections', {
+                    name: this.sections.length,
+                    type: "video",
+                    title: null,
+                    text: null
+                });
+            },
+            createImageSection: function () {
+                this.push('sections', {
+                    name: this.sections.length,
+                    type: "image",
+                    title: null,
+                    text: null
+                });
+            },
+            createLinkSection: function () {
+                this.push('sections', {
+                    name: this.sections.length,
+                    type: "link",
+                    title: null,
+                    text: null
+                });
+            },
+            onMoveUpSection: function (event, detail) {
+                var index = this.indexOfSection(detail.name);
+                var s = [];
+                if (index - 1 >= 0) {
+                    s = this.splice('sections', index - 1, this.sections.length - index + 1);
+                    var first = s[0];
+                    var second = s[1];
+                    var tail = s.filter(function (value, index, arr) {
+                        return index > 1;
+                    }, this);
+                    this.push('sections', second, first);
+                    tail.forEach(function (value, index, arr) {
+                        this.push('sections', value);
+                    }, this);
+                } else {
+                    s = this.splice('sections', 0, 1);
+                    this.push('sections', s[0]);
+                }
+            },
+            onMoveDownSection: function (event, detail) {
+                var index = this.indexOfSection(detail.name);
+                var s = [];
+                if (index < this.sections.length - 1) {
+                    s = this.splice('sections', index, this.sections.length - index);
+                    var first = s[0];
+                    var second = s[1];
+                    var tail = s.filter(function (value, index, arr) {
+                        return index > 1;
+                    }, this);
+                    this.push('sections', second, first);
+                    tail.forEach(function (value, index, arr) {
+                        this.push('sections', value);
+                    }, this);
+                } else {
+                    s = this.splice('sections', 0, this.sections.length - 1);
+                    s.forEach(function (value, index, arr) {
+                        this.push('sections', value);
+                    }, this);
+                }
+            },
+            onRemoveSection: function (event, detail) {
+                var index = this.indexOfSection(detail.name);
+                this.splice('sections', index, 1);
+            }
+        });
+    </script>
+</dom-module>

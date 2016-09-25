@@ -1,0 +1,145 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/image-icons.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../iron-fit-behavior/iron-fit-behavior.html">
+<link rel="import" href="../iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../paper-fab-transitions/paper-fab-morph.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+
+<link rel="import" href="plutonium-cms-icons.html">
+
+<link rel="import" href="plutonium-cms-image-display.html">
+<link rel="import" href="plutonium-cms-image-editor.html">
+<link rel="import" href="plutonium-cms-text-display.html">
+<link rel="import" href="plutonium-cms-text-editor.html">
+<link rel="import" href="plutonium-cms-video-display.html">
+<link rel="import" href="plutonium-cms-video-editor.html">
+
+
+<!--
+`plutonium-cms`
+CMS related components.
+
+@demo demo/index_field.html 
+-->
+
+<dom-module id="plutonium-cms-field">
+    <template>
+        <style include="iron-flex">
+            :host {
+                display: block;
+                /*@apply(--layout-flex);*/
+                @apply(--layout-horizontal);
+                position: relative;
+            }
+
+            paper-material {
+                background-color: white;
+
+            }
+
+            paper-fab {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                z-index: 9000;
+            }
+
+
+            iron-pages.field-displays {
+                min-height: 50px;
+            }
+
+            paper-fab-morph {
+                /*position: relative;*/
+                width: 100%;
+                
+                --paper-morph-background: var(--default-primary-color);
+                --paper-morph-dropdown: {
+/*                    position: absolute;
+                    top: 0px;
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;*/
+                }
+                --paper-morph-content: {
+                    position: relative;
+                    /*width: 100%;*/
+                    
+                    overflow: visible;
+                    background-color: white;
+                }
+            }
+
+
+            /*            paper-fab-morph paper-fab {
+                            position: absolute;
+                        }*/
+
+
+        </style>
+
+        <iron-pages class="field-displays" selected="{{model.type}}" attr-for-selected="name" fallback-selection="unknown">
+            <plutonium-cms-image-display model="[[model]]" name="image"></plutonium-cms-image-display>
+            <plutonium-cms-text-display model="[[model]]" name="text"></plutonium-cms-text-display>
+            <plutonium-cms-video-display model="[[model]]" name="video"></plutonium-cms-video-display>
+            <div name="unknown">This section of content is not displayable.</div>
+        </iron-pages>
+
+        <paper-fab-morph id="holder" vertical-align="top" horizontal-align="right">
+
+            <paper-material class="dropdown-content layout horizontal" elevation="2">
+                <!--<div class="layout horizontal">-->
+                <iron-pages selected="{{model.type}}" attr-for-selected="name" fallback-selection="unknown" class="flex">
+                    <plutonium-cms-image-editor model="{{model}}" name="image"></plutonium-cms-image-editor>
+                    <plutonium-cms-text-editor model="{{model}}" name="text"></plutonium-cms-text-editor>
+                    <plutonium-cms-video-editor model="{{model}}" name="video"></plutonium-cms-video-editor>
+                    <div name="unknown">This section of content is not editable.</div>
+                </iron-pages>
+                <div class="layout vertical">
+                    <paper-icon-button icon="plutonium-cms-icons:keyboard-arrow-up" on-tap="onMoveUp"></paper-icon-button>
+                    <paper-icon-button icon="close" on-tap="onRemove"></paper-icon-button>
+                    <paper-icon-button icon="plutonium-cms-icons:keyboard-arrow-down" on-tap="onMoveDown"></paper-icon-button>
+                </div>
+                <!--</div>-->
+            </paper-material>
+
+            <paper-fab mini icon="plutonium-cms-icons:more-vert" class="dropdown-trigger"></paper-fab>
+
+        </paper-fab-morph>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'plutonium-cms-field',
+            properties: {
+                model: {
+                    type: Object,
+                    notify: true
+                }
+            },
+            attached: function () {
+                console.log(this.is, 'create field=' + this.model.type);
+            },
+            onMoveUp: function (event, details) {
+                this.fire('moveup-section', {
+                    name: this.model.name
+                });
+            },
+            onMoveDown: function (event, details) {
+                this.fire('movedown-section', {
+                    name: this.model.name
+                });
+            },
+            onRemove: function (event, details) {
+                this.fire('remove-section', {
+                    name: this.model.name
+                });
+            }
+        });
+    </script>
+</dom-module>
