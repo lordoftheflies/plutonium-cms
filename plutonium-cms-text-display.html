@@ -21,7 +21,7 @@ CMS related components.
             }
         </style>
         <h2>[[contentModel.title]]</h2>
-        <p>[[contentModel.data]]</p>
+        <p id="pData">[[contentModel.data]]</p>
     </template>
 
     <script>
@@ -33,6 +33,12 @@ CMS related components.
                     notify: true
                 },
             },
+            observers: [
+                'observeData(contentModel.data)'
+            ],
+            observeData: function(data) {
+                this.$.pData.innerHtml = data;
+            }
         });
     </script>
 </dom-module>
