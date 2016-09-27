@@ -21,7 +21,7 @@ CMS related components.
             }
         </style>
         <h2>[[contentModel.title]]</h2>
-        <video width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
+        <video is="videoDisplay" width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
     </template>
 
     <script>
@@ -49,6 +49,8 @@ CMS related components.
                         id = id.toString();
                         var mp4url = "http://www.youtubeinmp4.com/redirect.php?video=";
                         this.videoSrc = mp4url + id;
+                    } else {
+                        this.videoSrc = data;
                     }
                 }
 
