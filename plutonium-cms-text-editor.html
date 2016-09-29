@@ -2,6 +2,7 @@
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
 
+<link rel="import" href="plutonium-cms-field-behavior.html">
 <!--
 `plutonium-cms-text-editor`
 CMS related components.
@@ -23,22 +24,30 @@ CMS related components.
                 margin: 10px;
             }
         </style>
-        <h2>Edit text properties</h2>
         <div class="card-content">
-            <paper-input label="Title" name="title" value="{{contentModel.title}}"></paper-input>
-            <paper-textarea label="Text" name="text" value="{{contentModel.data}}"></paper-textarea>
+            <paper-input id="titleInput" label="Title" name="title" value="{{contentModel.title}}" required auto-validate></paper-input>
+            <paper-textarea id="dataInput" label="Text" name="data" value="{{contentModel.data}}"></paper-textarea>
         </div>
     </template>
 
     <script>
         Polymer({
             is: 'plutonium-cms-text-editor',
+            behaviors: [
+                Plutonium.CmsFieldBehavior
+            ],
             properties: {
                 contentModel: {
                     type: Object,
                     notify: true,
                 },
             },
+            _getValidity: function (value) {
+                var v = (this.$.titleInput.validate() &&
+                        this.$.dataInput.validate());
+                console.log(this.is, '[' + this.name + ']', '=', value, ' --> ', (v ? 'valid' : 'invalid'));
+                return v;
+            }
         });
     </script>
 </dom-module>

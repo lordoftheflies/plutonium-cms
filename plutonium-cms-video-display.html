@@ -19,6 +19,7 @@ CMS related components.
             :host h2 {
                 margin: 10px;
             }
+            
         </style>
         <h2>[[contentModel.title]]</h2>
         <video is="videoDisplay" width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
@@ -39,6 +40,9 @@ CMS related components.
             ready: function () {
 //                this.$.player.mediaelementplayer(/* Options */);
             },
+            
+            
+            
             observeVideoUrl: function (data) {
 //                console.log(this.is + ' observe contentModel data.');
                 if (data) {

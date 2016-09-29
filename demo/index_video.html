@@ -20,25 +20,30 @@
             <h3>Basic plutonium-cms Demo</h3>
             <demo-snippet>
                 <template>
-                    <plutonium-cms-video-display id="display"></plutonium-cms-video-display>
-                    <plutonium-cms-video-editor id="editor"></plutonium-cms-video-editor>
+                    <div  class="container">
+                        <plutonium-cms-video-display id="display"></plutonium-cms-video-display>
+                        <!--<form>-->
+                            <plutonium-cms-video-editor id="editor" required auto-validate auto-fit-on-attach vertical-align="auto" horizontal-align="auto">
+                            </plutonium-cms-video-editor>
+                        <!--</form>-->
 
-                    <script>
-                        var display = document.getElementById('display');
-                        var editor = document.getElementById('editor');
-                        console.log('Demo: Start demo ...');
+                        <script>
+                            var display = document.getElementById('display');
+                            var editor = document.getElementById('editor');
+                            console.log('Demo: Start demo ...');
 
-                        var model = {
-                            title: 'Test title video',
-                            data: 'https://youtu.be/cZc6cr6G2E4',
-                            properties: {
-                                height: 300,
-                                width: 200
-                            }
-                        };
-                        display.contentModel = model;
-                        editor.contentModel = model;
-                    </script>
+                            var model = {
+                                title: 'Test title video',
+                                data: 'https://youtu.be/cZc6cr6G2E4',
+                                properties: {
+                                    height: 300,
+                                    width: 200
+                                }
+                            };
+                            display.contentModel = model;
+                            editor.contentModel = model;
+                        </script>
+                    </div>
                 </template>
             </demo-snippet>
         </div>

@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-input.html">
 
+<link rel="import" href="plutonium-cms-field-behavior.html">
 <!--
 `plutonium-cms-image-editor`
 CMS related components.
@@ -22,24 +23,40 @@ CMS related components.
                 margin: 10px;
             }
         </style>
-        <h2>Edit image properties</h2>
         <div class="card-content">
-            <paper-input label="Title" name="title" value="{{contentModel.title}}"></paper-input>
-            <paper-input label="Url" name="src" value="{{contentModel.data}}"></paper-input>
-            <paper-input label="Width" name="width" value="{{contentModel.width}}"></paper-input>
-            <paper-input label="Height" name="height" value="{{contentModel.height}}"></paper-input>
+
+            <paper-input id="titleInput" label="Title" name="title" value="{{contentModel.title}}"></paper-input>
+
+            <paper-input id="dataInput" label="Url" name="data" type="text" value="{{contentModel.data}}" required auto-validate></paper-input>
+
+            <paper-input id="widthInput" label="Width" name="width" type="number" value="{{contentModel.width}}" required auto-validate></paper-input>
+
+            <paper-input id="heightInput" label="Height" name="height" type="number" value="{{contentModel.height}}" required auto-validate></paper-input>
+
         </div>
     </template>
 
     <script>
         Polymer({
             is: 'plutonium-cms-image-editor',
+            behaviors: [
+                Plutonium.CmsFieldBehavior
+            ],
             properties: {
                 prop1: {
                     type: String,
                     value: 'plutonium-cms-image-editor',
                 },
             },
+            _getValidity: function (value) {
+                var v = (this.$.titleInput.validate() &&
+                        this.$.dataInput.validate() &&
+                        this.$.titleInput.validate() &&
+                        this.$.heightInput.validate() && this.contentModel.width > 0 &&
+                        this.$.widthInput.validate() && this.contentModel.height > 0);
+                console.log(this.is, '[' + this.name + ']', '=', value, ' --> ', (v ? 'valid' : 'invalid'));
+                return v;
+            }
         });
     </script>
 </dom-module>

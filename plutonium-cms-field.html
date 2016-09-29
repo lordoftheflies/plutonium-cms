@@ -9,6 +9,14 @@
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../neon-animation/neon-animations.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../iron-fit-behavior/iron-fit-behavior.html">
 
 <link rel="import" href="plutonium-cms-icons.html">
 
@@ -33,8 +41,12 @@ CMS related components.
             :host {
                 display: block;
                 /*@apply(--layout-flex);*/
-                @apply(--layout-horizontal);
+                /*@apply(--layout-horizontal);*/
                 position: relative;
+            }
+
+            :host([invalid]) .field-displays {
+                border-color: red;
             }
 
             paper-material {
@@ -55,21 +67,28 @@ CMS related components.
             }
 
             paper-fab-morph {
-                /*position: relative;*/
+                position: absolute;
                 width: 100%;
-                
+
                 --paper-morph-background: var(--default-primary-color);
                 --paper-morph-dropdown: {
-/*                    position: absolute;
+                    position: absolute;
                     top: 0px;
-                    bottom: 0px;
+                    /*bottom: 0px;*/
                     left: 0px;
-                    right: 0px;*/
+                    /*right: 0px;*/
                 }
                 --paper-morph-content: {
                     position: relative;
-                    /*width: 100%;*/
-                    
+                    width: 100%;
+                    /*                    top: 0px;
+                                        left: 0px;*/
+                    /*                    right: 0px;
+                                        bottom: 0px;*/
+
+                    /*                    height: 300px;
+                                        width: 300px;*/
+
                     overflow: visible;
                     background-color: white;
                 }
@@ -83,47 +102,106 @@ CMS related components.
 
         </style>
 
-        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown">
+
+
+        <paper-fab-morph id="holder" is-overlay-content vertical-align="top" horizontal-align="right">
+
+            <paper-dialog  id="editorField"  no-overlap class="field-editors dropdown-content" modal elevation="2">
+                <h2>Edit {{contentModel.type}} properties</h2>
+                <!--<div class="layout horizontal">-->
+                <paper-dialog-scrollable>
+                    <iron-pages selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown" class="dropdown-content layout horizontal">
+                        <plutonium-cms-image-editor content-model="{{contentModel}}" id="imageEditor" name="image" auto-validate invalid="{{invalid}}"></plutonium-cms-image-editor>
+                        <plutonium-cms-text-editor content-model="{{contentModel}}" id="textEditor" name="text" auto-validate invalid="{{invalid}}"></plutonium-cms-text-editor>
+                        <plutonium-cms-video-editor content-model="{{contentModel}}" id="videoEditor" name="video" auto-validate invalid="{{invalid}}"></plutonium-cms-video-editor>
+                        <div name="unknown">This section of content is not editable.</div>
+                    </iron-pages>
+                </paper-dialog-scrollable>
+                <div class="buttons">
+                    <paper-icon-button 
+                        icon="plutonium-cms-icons:apply" title="Apply changes"
+                        on-tap="onApply" dialog-confirm autofocus></paper-icon-button>
+                    <paper-icon-button 
+                        icon="plutonium-cms-icons:keyboard-arrow-up" title="Move section up"
+                        on-tap="onMoveUp"></paper-icon-button>
+                    <paper-icon-button 
+                        icon="plutonium-cms-icons:clear" title="Remove current section"
+                        on-tap="onRemove" dialog-dismiss></paper-icon-button>
+                    <paper-icon-button 
+                        icon="plutonium-cms-icons:keyboard-arrow-down" title="Move section down"
+                        on-tap="onMoveDown"></paper-icon-button>
+                    <paper-icon-button 
+                        icon="plutonium-cms-icons:cancel"  
+                        dialog-dismiss></paper-icon-button>
+                </div>
+                <!--</div>-->
+            </paper-dialog>
+
+            <div id="displayField">
+
+            </div>
+            <paper-fab mini icon="plutonium-cms-icons:more-vert" class="dropdown-trigger"></paper-fab>
+            <!--            <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown"  invalid="[[invalid]]">
+                            <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
+                            <plutonium-cms-text-display content-model="[[contentModel]]" name="text"></plutonium-cms-text-display>
+                            <plutonium-cms-video-display content-model="[[contentModel]]" name="video"></plutonium-cms-video-display>
+                            <div name="unknown">This section of content is not displayable.</div>
+                        </iron-pages>-->
+
+
+        </paper-fab-morph>
+
+        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown"  invalid="[[invalid]]">
             <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
             <plutonium-cms-text-display content-model="[[contentModel]]" name="text"></plutonium-cms-text-display>
             <plutonium-cms-video-display content-model="[[contentModel]]" name="video"></plutonium-cms-video-display>
             <div name="unknown">This section of content is not displayable.</div>
         </iron-pages>
-
-        <paper-fab-morph id="holder" vertical-align="top" horizontal-align="right">
-
-            <paper-material class="dropdown-content layout horizontal" elevation="2">
-                <!--<div class="layout horizontal">-->
-                <iron-pages selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown" class="flex">
-                    <plutonium-cms-image-editor content-model="{{contentModel}}" name="image"></plutonium-cms-image-editor>
-                    <plutonium-cms-text-editor content-model="{{contentModel}}" name="text"></plutonium-cms-text-editor>
-                    <plutonium-cms-video-editor content-model="{{contentModel}}" name="video"></plutonium-cms-video-editor>
-                    <div name="unknown">This section of content is not editable.</div>
-                </iron-pages>
-                <div class="layout vertical">
-                    <paper-icon-button icon="plutonium-cms-icons:keyboard-arrow-up" on-tap="onMoveUp"></paper-icon-button>
-                    <paper-icon-button icon="close" on-tap="onRemove"></paper-icon-button>
-                    <paper-icon-button icon="plutonium-cms-icons:keyboard-arrow-down" on-tap="onMoveDown"></paper-icon-button>
-                </div>
-                <!--</div>-->
-            </paper-material>
-
-            <paper-fab mini icon="plutonium-cms-icons:more-vert" class="dropdown-trigger"></paper-fab>
-
-        </paper-fab-morph>
     </template>
 
     <script>
         Polymer({
             is: 'plutonium-cms-field',
+            behaviors: [
+                Polymer.IronValidatableBehavior,
+                Polymer.IronFormElementBehavior,
+                Polymer.IronFitBehavior
+            ],
             properties: {
                 contentModel: {
                     type: Object,
                     notify: true
+                },
+                value: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * Set to true to auto-validate the input value. If you're using PaperInputBehavior to
+                 * implement your own paper-input-like element, bind this to
+                 * the `<plutonium-cms-*-editor>`'s `autoValidate` property.
+                 */
+                autoValidate: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
                 }
+            },
+            listeners: {
+                'change': 'onContentModelPropertyChange'
             },
             attached: function () {
                 console.log(this.is, 'create field=' + this.contentModel.type);
+//                var display = document.createElement('plutonium-cms-' + this.contentModel.type + '-display');
+//                display.contentModel = this.contentModel;
+//                this.$.displayField.appendChild(display);
+//                var editor = document.createElement('plutonium-cms-' + this.contentModel.type + '-editor');
+//                editor.contentModel = this.contentModel;
+//                this.$.editorField.appendChild(editor);
+
+            },
+            detached: function () {
+
             },
             onMoveUp: function (event, details) {
                 this.fire('moveup-section', {
@@ -139,7 +217,19 @@ CMS related components.
                 this.fire('remove-section', {
                     name: this.contentModel.name
                 });
-            }
+            },
+            _getValidity: function (value) {
+                return (this.$.imageEditor.validate() ||
+                        this.$.videoEditor.validate() ||
+                        this.$.textEditor.validate());
+            },
+            onContentModelPropertyChange: function (event, details) {
+//                this.$.imageEditor.onContentModelPropertyChange(event, details);
+//                this.$.videoEditor.onContentModelPropertyChange(event, details);
+//                this.$.textEditor.onContentModelPropertyChange(event, details);
+                if (this.autoValidate)
+                    this.validate();
+            },
         });
     </script>
 </dom-module>
