@@ -106,7 +106,7 @@ CMS related components.
 
         <paper-fab-morph id="holder" is-overlay-content vertical-align="top" horizontal-align="right">
 
-            <paper-dialog  id="editorField"  no-overlap class="field-editors dropdown-content" modal elevation="2">
+            <paper-dialog  id="editorField"  no-overlap class="field-editors dropdown-content" modal elevation="2" on-iron-overlay-opened="patchOverlay">
                 <h2>Edit {{contentModel.type}} properties</h2>
                 <!--<div class="layout horizontal">-->
                 <paper-dialog-scrollable>
@@ -229,6 +229,11 @@ CMS related components.
 //                this.$.textEditor.onContentModelPropertyChange(event, details);
                 if (this.autoValidate)
                     this.validate();
+            },
+            patchOverlay: function (e) {
+                if (e.target.withBackdrop) {
+                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
+                }
             },
         });
     </script>
