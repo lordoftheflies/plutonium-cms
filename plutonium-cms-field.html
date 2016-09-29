@@ -232,9 +232,18 @@ CMS related components.
             },
             patchOverlay: function (e) {
                 if (e.target.withBackdrop) {
-                    
+
 //                    document.querySelector('wonderjam-app').$.mainLayout.insertBefore(e.target._backdrop, e.target);
-                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
+//                    e.target.parentNode.insertBefore(e.target._backdrop, e.target);
+
+
+                    var dialog = e.target;
+                    var overlay = dialog.backdropElement;
+
+                    if (overlay.previousSibling !== dialog) {
+                        overlay.parentNode.insertBefore(dialog, null);
+                    }
+
                 }
             },
         });
