@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <!--
 `plutonium-cms-video-display`
 CMS related components.
@@ -9,9 +10,10 @@ CMS related components.
 
 <dom-module id="plutonium-cms-video-display">
     <template>
-        <style>
+        <style include="iron-flex">
             :host {
                 display: block;
+                @apply(--layout-vertical);
             }
             :host video {
                 margin: 10px;
@@ -22,7 +24,7 @@ CMS related components.
             
         </style>
         <h2>[[contentModel.title]]</h2>
-        <video is="videoDisplay" width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
+        <video id="videoDisplay" class="layout center" width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" src="{{videoSrc}}" type="video/mp4" preload="auto"></video>
     </template>
 
     <script>
@@ -35,12 +37,15 @@ CMS related components.
                 },
             },
             observers: [
-                'observeVideoUrl(contentModel.data)'
+                'observeVideoUrl(contentModel.data)',
+                '_observeSize(contentModel.width, contentModel.height)'
             ],
             ready: function () {
 //                this.$.player.mediaelementplayer(/* Options */);
             },
-            
+            _observeSize: function (width, height) {
+                this.updateStyles();
+            },
             
             
             observeVideoUrl: function (data) {

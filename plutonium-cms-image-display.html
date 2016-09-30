@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../iron-image/iron-image.html">
 
 <!--
@@ -11,15 +12,16 @@ CMS related components.
 
 <dom-module id="plutonium-cms-image-display">
     <template>
-        <style>
+        <style include="iron-flex">
             :host {
                 display: block;
+                @apply(--layout-vertical);
             }
-            
+
             :host h2 {
                 margin: 10px;
             }
-            
+
             :host iron-image {
                 margin: 10px;
                 width: 100%;
@@ -27,7 +29,7 @@ CMS related components.
             }
         </style>
         <h2>[[contentModel.title]]</h2>
-        <iron-image src="[[contentModel.data]]" sizing="cover" style="width:{{contentModel.width}}px; height:{{contentModel.height}}px;"></iron-image>
+        <iron-image class="layout center" src="[[contentModel.data]]" sizing="contain" style="width: {{contentModel.width}}px; height: {{contentModel.height}}px;"></iron-image>
     </template>
 
     <script>
@@ -39,6 +41,14 @@ CMS related components.
                     value: 'plutonium-cms-image-display',
                 },
             },
+            observers: [
+                '_observeSize(contentModel.width, contentModel.height)'
+            ],
+            _observeSize: function (width, height) {
+                this.customStyle['--iron-image-width'] = width + 'px';
+                this.customStyle['--iron-image-height'] = height + 'px';
+                this.updateStyles();
+            }
         });
     </script>
 </dom-module>

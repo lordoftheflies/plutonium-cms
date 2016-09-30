@@ -37,7 +37,7 @@ CMS related components.
 
 <dom-module id="plutonium-cms-field">
     <template>
-        <style include="iron-flex">
+        <style include="iron-flex iron-flex-alignment">
             :host {
                 display: block;
                 /*@apply(--layout-flex);*/
@@ -117,7 +117,7 @@ CMS related components.
                         <div name="unknown">This section of content is not editable.</div>
                     </iron-pages>
                 </paper-dialog-scrollable>
-                <div class="buttons">
+                <div class="buttons center">
                     <paper-icon-button 
                         icon="plutonium-cms-icons:apply" title="Apply changes"
                         on-tap="onApply" dialog-confirm autofocus></paper-icon-button>
