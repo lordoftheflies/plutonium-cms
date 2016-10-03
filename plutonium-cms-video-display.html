@@ -24,9 +24,8 @@ CMS related components.
             
         </style>
         <h2>[[contentModel.title]]</h2>
-        <video id="videoDisplay" class="layout center" width="{{contentModel.width}}" height="{{contentModel.height}}" controls="true" preload="auto">
-            
-            <source src="{{videoSrc}}" type="video/mp4">
+        <video id="videoDisplay" width="{{contentModel.width}}" src="{{videoSrc}}" type="video/mp4" height="{{contentModel.height}}" controls="true" preload="auto"  autobuffer onclick="this.play();">
+            This browser does not support HTML5.
         </video>
     </template>
 
