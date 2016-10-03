@@ -1,12 +1,19 @@
 
 <link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
+
 <script>
+    
     window.Plutonium = window.Plutonium || {};
+    
     Plutonium.CmsFieldBehaviorImpl = {
-        behaviors: [
-            Polymer.IronValidatableBehavior
-        ],
+//        behaviors: [
+//            Polymer.IronValidatableBehavior
+//        ],
         properties: {
+            contentModel: {
+                type: Object,
+                notify: true
+            },
             value: {
                 type: Object,
                 notify: true

@@ -14,7 +14,7 @@ CMS related components.
     <template>
         <style include="iron-flex">
             :host {
-                display: block;
+                display: inline-block;
                 @apply(--layout-vertical);
             }
 
@@ -29,7 +29,7 @@ CMS related components.
             }
         </style>
         <h2>[[contentModel.title]]</h2>
-        <iron-image class="layout center" src="[[contentModel.data]]" sizing="contain" style="width: {{contentModel.width}}px; height: {{contentModel.height}}px;"></iron-image>
+        <iron-image class="" src="[[contentModel.data]]" sizing="cover" style="width: {{contentModel.width}}px; height: {{contentModel.height}}px;"></iron-image>
     </template>
 
     <script>

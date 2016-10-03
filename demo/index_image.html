@@ -20,8 +20,14 @@
             <h3>Basic plutonium-cms Demo</h3>
             <demo-snippet>
                 <template>
-                    <plutonium-cms-image-display></plutonium-cms-image-display>
-                    <plutonium-cms-image-editor></plutonium-cms-image-editor>
+                    <h1>DISPLAY</h1>
+                    <plutonium-cms-image-display content-model='{ "title": "Image title", "data": "http://orig15.deviantart.net/0aaf/f/2008/107/4/0/40c5ca205b1cc63265d14d85a08fbe88.jpg", "width": 100, "height": 100, "justification": "center" }'></plutonium-cms-image-display>
+                    <h1>EDITOR</h1>
+                    <plutonium-cms-image-editor content-model='{ "title": "Image title", "data": "http://orig15.deviantart.net/0aaf/f/2008/107/4/0/40c5ca205b1cc63265d14d85a08fbe88.jpg", "width": 100, "height": 100, "justification": "center" }'></plutonium-cms-image-editor>
+                    <h1>NEW</h1>
+                    <plutonium-cms-image-editor content-model='{ "title": "", "data": "", "width": 0, "height": 0, "justification": "center" }'></plutonium-cms-image-editor>
+                    <h1>INVALID</h1>
+                    <plutonium-cms-image-editor content-model='{ "title": "", "data": "", "width": -1, "height": -1, "justification": "center" }'></plutonium-cms-image-editor>
                 </template>
             </demo-snippet>
         </div>

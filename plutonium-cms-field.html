@@ -162,11 +162,11 @@ CMS related components.
     <script>
         Polymer({
             is: 'plutonium-cms-field',
-            behaviors: [
-                Polymer.IronValidatableBehavior,
-                Polymer.IronFormElementBehavior,
-                Polymer.IronFitBehavior
-            ],
+//            behaviors: [
+//                Polymer.IronValidatableBehavior,
+////                Polymer.IronFormElementBehavior,
+////                Polymer.IronFitBehavior
+//            ],
             properties: {
                 contentModel: {
                     type: Object,
@@ -246,6 +246,10 @@ CMS related components.
 
                 }
             },
+            onApply: function(event, detail) {
+                console.log(this.is, 'apply', detail);
+                
+            }
         });
     </script>
 </dom-module>
