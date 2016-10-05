@@ -1,5 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
+<link rel="import" href="plutonium-cms-boxing-behavior.html">
+
 <!--
 `plutonium-cms-text-display`
 CMS related components.
@@ -27,6 +29,9 @@ CMS related components.
     <script>
         Polymer({
             is: 'plutonium-cms-text-display',
+            behaviors: [
+                Plutonium.CmsBoxingBehavior
+            ],
             properties: {
                 contentModel: {
                     type: Object,

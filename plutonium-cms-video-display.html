@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="plutonium-cms-boxing-behavior.html">
 <!--
 `plutonium-cms-video-display`
 CMS related components.
@@ -21,7 +23,7 @@ CMS related components.
             :host h2 {
                 margin: 10px;
             }
-            
+
         </style>
         <h2>[[contentModel.title]]</h2>
         <video id="videoDisplay" width="{{contentModel.width}}" src="{{videoSrc}}" type="video/mp4" height="{{contentModel.height}}" 
@@ -33,6 +35,9 @@ CMS related components.
     <script>
         Polymer({
             is: 'plutonium-cms-video-display',
+            behaviors: [
+                Plutonium.CmsBoxingBehavior
+            ],
             properties: {
                 prop1: {
                     type: String,
@@ -49,8 +54,6 @@ CMS related components.
             _observeSize: function (width, height) {
                 this.updateStyles();
             },
-            
-            
             observeVideoUrl: function (data) {
 //                console.log(this.is + ' observe contentModel data.');
                 if (data) {
