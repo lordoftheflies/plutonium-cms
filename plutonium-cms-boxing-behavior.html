@@ -31,16 +31,16 @@
         },
         onSizeChanged: function () {
             console.log(this.is, 'model size changed to', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parent.offsetWidth + 'x' + this.parent.offsetHeight);
-            this._width = this.parent.offsetWidth !== 0 ? this.parent.offsetWidth : this.contentModel.width;
+            this._width = this.parent.offsetWidth;
             this._height = this.parent.offsetHeight;
         },
         computeEffectiveWidth: function (width, offsetWidth) {
-            console.log(this.is, 'WIDTH', width, offsetWidth);
+            console.log(this.is, 'WIDTH', ((width < offsetWidth) ? width : offsetWidth));
             // TODO: add ass mixin.
             return ((width < offsetWidth) ? width : offsetWidth);
         },
         computeEffectiveHeight: function (width, height, offsetWidth) {
-            console.log(this.is, 'HEIGHT', height);
+            console.log(this.is, 'HEIGHT', Math.round((offsetWidth * height) / width));
             return Math.round((offsetWidth * height) / width);
         },
 //        modelChanged: function (contentModel) {
