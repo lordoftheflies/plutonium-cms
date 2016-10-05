@@ -79,9 +79,11 @@ CMS related components.
                         }
                     }, this);
                 } else {
-                    this.$.contentContainer.children.forEach(function (child, index) {
-                        this.$.contentContainer.removeChild(child);
-                    }, this);
+                    
+                    var children = this.$.contentContainer.children;
+                    for (var i = 0; i < children.length; i++) {
+                        this.$.contentContainer.removeChild(children[i]);
+                    }
 
 //                    var self = this;
                     changeRecord.value.forEach(function (s, index) {
@@ -94,6 +96,8 @@ CMS related components.
                     }, this);
 
                 }
+                
+                Polymer.dom.flush();
             },
             indexOfSection: function (name) {
                 var s = this.contentModel.sections;
