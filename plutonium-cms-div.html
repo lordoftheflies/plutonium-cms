@@ -18,9 +18,6 @@ CMS related components.
         <style include="iron-flex">
             :host {
                 display: inline-block;
-                /*position: relative;*/
-                /*                @apply(--layout-vertical);
-                                @apply(--layout-flex);*/
             }
             :host h1 {
                 margin-top: 10px;
@@ -29,14 +26,6 @@ CMS related components.
         </style>
         <h1>[[contentModel.title]]</h1>
         <div id="contentContainer" class="layout vertical"></div>
-        <!--        <template is="dom-repeat" items="{{contentModel.sections}}" as="s">
-                    <iron-pages class="field-displays" selected="{{s.type}}" attr-for-selected="name" fallback-selection="unknown">
-                        <plutonium-cms-image-display content-model="[[s]]" name="image"></plutonium-cms-image-display>
-                        <plutonium-cms-text-display content-model="[[s]]" name="text"></plutonium-cms-text-display>
-                        <plutonium-cms-video-display content-model="[[s]]" name="video"></plutonium-cms-video-display>
-                        <div name="unknown">This section of content is not displayable.</div>
-                    </iron-pages>
-                </template>-->
     </template>
 
     <script>
@@ -96,20 +85,20 @@ CMS related components.
                     }, this);
                 } else {
 
-                    var children = this.$.contentContainer.children;
-                    for (var i = 0; i < children.length; i++) {
-                        this.$.contentContainer.removeChild(children[i]);
-                    }
-
-//                    var self = this;
-                    changeRecord.value.forEach(function (s, index) {
-                        var display = document.createElement(this.identifyDisplay(s.type));
-                        display.id = 'contentSection' + index;
-                        display.contentModel = s;
-                        display.verticalAlign = 'auto';
-                        display.horizontalAlign = 'auto';
-                        this.$.contentContainer.appendChild(display);
-                    }, this);
+//                    var children = this.$.contentContainer.children;
+//                    for (var i = 0; i < children.length; i++) {
+//                        this.$.contentContainer.removeChild(children[i]);
+//                    }
+//
+////                    var self = this;
+//                    changeRecord.value.forEach(function (s, index) {
+//                        var display = document.createElement(this.identifyDisplay(s.type));
+//                        display.id = 'contentSection' + index;
+//                        display.contentModel = s;
+//                        display.verticalAlign = 'auto';
+//                        display.horizontalAlign = 'auto';
+//                        this.$.contentContainer.appendChild(display);
+//                    }, this);
 
                 }
 
