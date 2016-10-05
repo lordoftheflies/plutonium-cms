@@ -31,7 +31,7 @@
         },
         onSizeChanged: function () {
             console.log(this.is, 'model size changed to', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parent.offsetWidth + 'x' + this.parent.offsetHeight);
-            this._width = this.parent.offsetWidth;
+            this._width = this.parent.offsetWidth !== 0 ? this.parent.offsetWidth : this.contentModel.width;
             this._height = this.parent.offsetHeight;
         },
         computeEffectiveWidth: function (width, offsetWidth) {
