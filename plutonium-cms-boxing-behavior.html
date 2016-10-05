@@ -41,7 +41,7 @@
         },
         computeEffectiveHeight: function(width, height, offsetWidth) {
             console.log(this.is, 'HEIGHT', height);
-            return Math.round((height / width) * offsetWidth);
+            return Math.round((offsetWidth * height) / width);
         },
 //        modelChanged: function (contentModel) {
 //            console.log(this.is, 'model changed', contentModel);
