@@ -19,8 +19,8 @@ CMS related components.
             :host {
                 display: inline-block;
                 /*position: relative;*/
-/*                @apply(--layout-vertical);
-                @apply(--layout-flex);*/
+                /*                @apply(--layout-vertical);
+                                @apply(--layout-flex);*/
             }
             :host h1 {
                 margin-top: 10px;
@@ -79,6 +79,10 @@ CMS related components.
                         }
                     }, this);
                 } else {
+                    this.$.contentContainer.children.forEach(function (child, index) {
+                        this.$.contentContainer.removeChild(child);
+                    }, this);
+
 //                    var self = this;
                     changeRecord.value.forEach(function (s, index) {
                         var display = document.createElement(this.identifyDisplay(s.type));
