@@ -58,6 +58,22 @@ CMS related components.
             observers: [
                 'sectionsAddedOrRemoved(contentModel.sections.*)'
             ],
+            attached: function () {
+                this.contentModel.sections.forEach(function (s, index) {
+                    var display = document.createElement(this.identifyDisplay(s.type));
+                    display.id = 'contentSection' + index;
+                    display.contentModel = s;
+                    display.verticalAlign = 'auto';
+                    display.horizontalAlign = 'auto';
+                    this.$.contentContainer.appendChild(display);
+                }, this);
+            },
+            detached: function () {
+                var children = this.$.contentContainer.children;
+                for (var i = 0; i < children.length; i++) {
+                    this.$.contentContainer.removeChild(children[i]);
+                }
+            },
             sectionsAddedOrRemoved: function (changeRecord) {
                 if (changeRecord.splices) {
                     changeRecord.splices.indexSplices.forEach(function (s) {
@@ -79,7 +95,7 @@ CMS related components.
                         }
                     }, this);
                 } else {
-                    
+
                     var children = this.$.contentContainer.children;
                     for (var i = 0; i < children.length; i++) {
                         this.$.contentContainer.removeChild(children[i]);
@@ -96,7 +112,7 @@ CMS related components.
                     }, this);
 
                 }
-                
+
                 Polymer.dom.flush();
             },
             indexOfSection: function (name) {
