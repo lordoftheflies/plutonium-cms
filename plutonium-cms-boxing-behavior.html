@@ -1,16 +1,70 @@
 
 <link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
 <link rel="import" href="../iron-fit-behavior/iron-fit-behavior.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
 <script>
 
     window.Plutonium = window.Plutonium || {};
-
     Plutonium.CmsBoxingBehaviorImpl = {
+        properties: {
+            contentModel: {
+                type: Object,
+                notify: true,
+                reflectToAttribute: true
+            },
+            _effectiveWidth: {
+                type: Number,
+                computed: 'computeEffectiveWidth(contentModel.width, _width)'
+            },
+            _effectiveHeight: {
+                type: Number,
+                computed: 'computeEffectiveHeight(contentModel.width, contentModel.height, _width)'
+            }
+        },
+        observers: [
+//            'sizeChanged(contentModel.width, contentModel.height)',
+//            'modelChanged(contentModel)'
+        ],
+        listeners: {
+            'iron-resize': 'onSizeChanged'
+        },
+        onSizeChanged: function () {
+            console.log(this.is, 'model size changed to', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parentNode.offsetWidth + 'x' + this.parentNode.offsetHeight);
+            this._width = this.parentNode.offsetWidth;
+            this._height = this.parentNode.offsetHeight;
+        },
+        computeEffectiveWidth: function(width, offsetWidth) {
+            console.log(this.is, 'WIDTH', width, offsetWidth);
+            // TODO: add ass mixin.
+            return ((width > offsetWidth) ? offsetWidth : width);
+        },
+        computeEffectiveHeight: function(width, height, offsetWidth) {
+            console.log(this.is, 'HEIGHT', height);
+            return Math.round((height / width) * offsetWidth);
+        },
+//        modelChanged: function (contentModel) {
+//            console.log(this.is, 'model changed', contentModel);
+//        },
+        attached: function () {
+//            try {
+//                console.log(this.is, 'attached', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.offsetWidth + 'x' + this.offsetHeight);
+//            } catch (s) {
+////                console.error(s);
+//            }
+            this.async(this.notifyResize, 1);
+        },
+        ready: function () {
+//            try {
+//                console.log(this.is, 'ready', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parentNode.offsetWidth + 'x' + this.parentNode.offsetHeight);
+//            } catch (s) {
+//                console.error(s);
+//            }
+        }
     };
-
     Plutonium.CmsBoxingBehavior = [
         Polymer.IronFitBehavior,
-        Plutonium.CmsBoxingBehaviorImpl
+        Plutonium.CmsBoxingBehaviorImpl,
+        Polymer.IronResizableBehavior
     ];
 </script>

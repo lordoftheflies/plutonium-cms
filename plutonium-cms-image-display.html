@@ -21,17 +21,19 @@ CMS related components.
             }
 
             :host h2 {
-                margin: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                /*margin: 10px;*/
             }
 
             :host iron-image {
-                margin: 10px;
+                /*margin: 10px;*/
                 width: 100%;
                 min-height: 20px;
             }
         </style>
         <h2>[[contentModel.title]]</h2>
-        <iron-image class="" src="[[contentModel.data]]" sizing="cover" style="width: {{contentModel.width}}px; height: {{contentModel.height}}px;"></iron-image>
+        <iron-image class="" src="[[contentModel.data]]" sizing="cover" style="width: [[_effectiveWidth]]px; height: [[_effectiveHeight]]px;"></iron-image>
     </template>
 
     <script>

@@ -19,12 +19,13 @@ CMS related components.
                 /*@apply(--layout-flex);*/
             }
             :host h1 {
-                margin: 10px;
+/*                margin-top: 10px;
+                margin-top: 10px;*/
             }
         </style>
         <h1>[[title]]</h1>
         <template is="dom-repeat" items="{{contentModel.sections}}" as="section">
-            <plutonium-cms-field name="[[section.id]]" content-model="{{section}}"></plutonium-cms-field>
+            <plutonium-cms-field name="[[section.id]]" content-model="{{section}}" auto-validate></plutonium-cms-field>
         </template>
     </template>
 

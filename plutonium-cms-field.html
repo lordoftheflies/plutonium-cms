@@ -45,6 +45,13 @@ CMS related components.
                 position: relative;
             }
 
+            #displayContent {
+                border-color: yellow;
+            }
+            #editorContent {
+                background-color: gray;
+            }
+
             :host([invalid]) .field-displays {
                 border-color: red;
             }
@@ -99,23 +106,25 @@ CMS related components.
                             position: absolute;
                         }*/
 
-
         </style>
 
 
 
         <paper-fab-morph id="holder" is-overlay-content vertical-align="top" horizontal-align="right">
 
-            <paper-dialog  id="editorField"  no-overlap class="field-editors dropdown-content" elevation="2" on-iron-overlay-opened="patchOverlay" with-backdrop>
+            <paper-dialog  id="editorDialog"  no-overlap class="field-editors dropdown-content" elevation="2" on-iron-overlay-opened="patchOverlay" with-backdrop>
                 <h2>Edit {{contentModel.type}} properties</h2>
                 <!--<div class="layout horizontal">-->
                 <paper-dialog-scrollable>
-                    <iron-pages selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown" class="dropdown-content layout horizontal">
-                        <plutonium-cms-image-editor content-model="{{contentModel}}" id="imageEditor" name="image" auto-validate invalid="{{invalid}}"></plutonium-cms-image-editor>
-                        <plutonium-cms-text-editor content-model="{{contentModel}}" id="textEditor" name="text" auto-validate invalid="{{invalid}}"></plutonium-cms-text-editor>
-                        <plutonium-cms-video-editor content-model="{{contentModel}}" id="videoEditor" name="video" auto-validate invalid="{{invalid}}"></plutonium-cms-video-editor>
-                        <div name="unknown">This section of content is not editable.</div>
-                    </iron-pages>
+                    <div id="editorField"></div>
+
+
+                    <!--                    <iron-pages selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown" class="dropdown-content layout horizontal">
+                                            <plutonium-cms-image-editor content-model="{{contentModel}}" id="imageEditor" name="image" auto-validate invalid="{{invalid}}"></plutonium-cms-image-editor>
+                                            <plutonium-cms-text-editor content-model="{{contentModel}}" id="textEditor" name="text" auto-validate invalid="{{invalid}}"></plutonium-cms-text-editor>
+                                            <plutonium-cms-video-editor content-model="{{contentModel}}" id="videoEditor" name="video" auto-validate invalid="{{invalid}}"></plutonium-cms-video-editor>
+                                            <div name="unknown">This section of content is not editable.</div>
+                                        </iron-pages>-->
                 </paper-dialog-scrollable>
                 <div class="buttons center">
                     <paper-icon-button 
@@ -137,7 +146,7 @@ CMS related components.
                 <!--</div>-->
             </paper-dialog>
 
-            <div id="displayField">
+            <!--<div id="displayField" is="[[identitfy(contentModel.type)]]" content-model="{{contentModel}}">-->
 
             </div>
             <paper-fab mini icon="plutonium-cms-icons:more-vert" class="dropdown-trigger"></paper-fab>
@@ -151,12 +160,14 @@ CMS related components.
 
         </paper-fab-morph>
 
-        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown"  invalid="[[invalid]]">
-            <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
-            <plutonium-cms-text-display content-model="[[contentModel]]" name="text"></plutonium-cms-text-display>
-            <plutonium-cms-video-display content-model="[[contentModel]]" name="video"></plutonium-cms-video-display>
-            <div name="unknown">This section of content is not displayable.</div>
-        </iron-pages>
+        <div id="displayField"></div>
+
+        <!--        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown"  invalid="[[invalid]]">
+                    <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
+                    <plutonium-cms-text-display content-model="[[contentModel]]" name="text"></plutonium-cms-text-display>
+                    <plutonium-cms-video-display content-model="[[contentModel]]" name="video"></plutonium-cms-video-display>
+                    <div name="unknown">This section of content is not displayable.</div>
+                </iron-pages>-->
     </template>
 
     <script>
@@ -192,16 +203,26 @@ CMS related components.
             },
             attached: function () {
                 console.log(this.is, 'create field=' + this.contentModel.type);
-//                var display = document.createElement('plutonium-cms-' + this.contentModel.type + '-display');
-//                display.contentModel = this.contentModel;
-//                this.$.displayField.appendChild(display);
-//                var editor = document.createElement('plutonium-cms-' + this.contentModel.type + '-editor');
-//                editor.contentModel = this.contentModel;
-//                this.$.editorField.appendChild(editor);
 
+                var display = document.createElement(this.identifyDisplay(this.contentModel.type));
+                display.id = 'displayContent';
+                display.contentModel = this.contentModel;
+                display.verticalAlign = 'auto';
+                display.horizontalAlign = 'auto';
+                this.$.displayField.appendChild(display);
+
+                var editor = document.createElement(this.identifyEditor(this.contentModel.type));
+                editor.id = 'editorContent';
+                editor.contentModel = this.contentModel;
+                editor.verticalAlign = 'auto';
+                editor.horizontalAlign = 'auto';
+                this.$.editorField.appendChild(editor);
+
+//                this.updateStyles();
             },
             detached: function () {
-
+                this.$.displayField.removeChild(this.$$("#displayContent"));
+                this.$.editorField.removeChild(this.$$("#editorContent"));
             },
             onMoveUp: function (event, details) {
                 this.fire('moveup-section', {
@@ -246,9 +267,24 @@ CMS related components.
 
                 }
             },
-            onApply: function(event, detail) {
+            onApply: function (event, detail) {
                 console.log(this.is, 'apply', detail);
-                
+
+//                this.contentModel = this.$.editorContent.contentModel;
+//                this.$$("#displayContent").contentModel.title = this.contentModel.title;
+                this.$.displayField.removeChild(this.$$("#displayContent"));
+                var display = document.createElement(this.identifyDisplay(this.contentModel.type));
+                display.id = 'displayContent';
+                display.contentModel = this.contentModel;
+                display.verticalAlign = 'auto';
+                display.horizontalAlign = 'auto';
+                this.$.displayField.appendChild(display);
+            },
+            identifyDisplay: function (type) {
+                return 'plutonium-cms-' + type + '-display';
+            },
+            identifyEditor: function (type) {
+                return 'plutonium-cms-' + type + '-editor';
             }
         });
     </script>

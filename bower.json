@@ -17,7 +17,8 @@
     "neon-animation": "polymerelements/neon-animation#^1.2.4",
     "web-animations-js": "^2.2.2",
     "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.5",
-    "iron-fit-behavior": "^1.2.5"
+    "iron-fit-behavior": "^1.2.5",
+    "iron-resizable-behavior": "^1.0.5"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
