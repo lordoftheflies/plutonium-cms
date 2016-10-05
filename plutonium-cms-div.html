@@ -19,8 +19,8 @@ CMS related components.
             :host {
                 display: inline-block;
                 /*position: relative;*/
-                @apply(--layout-vertical);
-                @apply(--layout-flex);
+/*                @apply(--layout-vertical);
+                @apply(--layout-flex);*/
             }
             :host h1 {
                 margin-top: 10px;
@@ -28,7 +28,7 @@ CMS related components.
             }
         </style>
         <h1>[[contentModel.title]]</h1>
-        <!--<div id="contentContainer"></div>-->
+        <div id="contentContainer" class="layout vertical"></div>
         <!--        <template is="dom-repeat" items="{{contentModel.sections}}" as="s">
                     <iron-pages class="field-displays" selected="{{s.type}}" attr-for-selected="name" fallback-selection="unknown">
                         <plutonium-cms-image-display content-model="[[s]]" name="image"></plutonium-cms-image-display>
@@ -63,7 +63,7 @@ CMS related components.
                     changeRecord.splices.indexSplices.forEach(function (s) {
                         s.removed.forEach(function (user, index) {
                             console.log(user.name + ' was removed');
-                            this.removeChild(this.$$('#contentSection' + index));
+                            this.$.contentContainer.removeChild(this.$$('#contentSection' + index));
                         });
                         for (var i = 0; i < s.addedCount; i++) {
                             var index = s.index + i;
@@ -75,7 +75,7 @@ CMS related components.
                             display.contentModel = this.contentModel;
                             display.verticalAlign = 'auto';
                             display.horizontalAlign = 'auto';
-                            this.appendChild(display);
+                            this.$.contentContainer.appendChild(display);
                         }
                     }, this);
                 } else {
@@ -86,7 +86,7 @@ CMS related components.
                         display.contentModel = s;
                         display.verticalAlign = 'auto';
                         display.horizontalAlign = 'auto';
-                        this.appendChild(display);
+                        this.$.contentContainer.appendChild(display);
                     }, this);
 
                 }

@@ -51,6 +51,10 @@ CMS related components.
             #editorContent {
                 background-color: gray;
             }
+            
+            .cms-display {
+                @apply(--layout-flex);
+            }
 
             :host([invalid]) .field-displays {
                 border-color: red;
@@ -160,7 +164,7 @@ CMS related components.
 
         </paper-fab-morph>
 
-        <div id="displayField"></div>
+        <div id="displayField" class="layout flex vertical"></div>
 
         <!--        <iron-pages class="field-displays" selected="{{contentModel.type}}" attr-for-selected="name" fallback-selection="unknown"  invalid="[[invalid]]">
                     <plutonium-cms-image-display content-model="[[contentModel]]" name="image"></plutonium-cms-image-display>
@@ -209,6 +213,7 @@ CMS related components.
                 display.contentModel = this.contentModel;
                 display.verticalAlign = 'auto';
                 display.horizontalAlign = 'auto';
+                display.class += display.class + ' cms-display';
                 this.$.displayField.appendChild(display);
 
                 var editor = document.createElement(this.identifyEditor(this.contentModel.type));
