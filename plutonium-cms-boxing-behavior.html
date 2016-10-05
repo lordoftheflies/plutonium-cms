@@ -1,0 +1,56 @@
+
+<link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html">
+
+<script>
+    
+    window.Plutonium = window.Plutonium || {};
+    
+    Plutonium.CmsFieldBehaviorImpl = {
+//        behaviors: [
+//            Polymer.IronValidatableBehavior
+//        ],
+        properties: {
+            contentModel: {
+                type: Object,
+                notify: true
+            },
+            value: {
+                type: Object,
+                notify: true
+            },
+            /**
+             * Set to true to auto-validate the input value. If you're using PaperInputBehavior to
+             * implement your own paper-input-like element, bind this to
+             * the `<plutonium-cms-*-editor>`'s `autoValidate` property.
+             */
+            autoValidate: {
+                type: Boolean,
+                notify: true,
+                value: false
+            },
+        },
+        observers: [
+            '_observeModel(contentModel)',
+//                '_handleAutoValidate(autoValidate, value.*)'
+        ],
+        listeners: {
+//            'change': 'onContentModelPropertyChange'
+        },
+        /**
+         * If `autoValidate` is true, then validates the element.
+         */
+        _observeModel: function (model) {
+            this.value = model;
+            this.validate();
+        },
+        onContentModelPropertyChange: function (event, details) {
+            if (this.autoValidate)
+                this.validate();
+        },
+    };
+
+    Plutonium.CmsFieldBehavior = [
+        Polymer.IronValidatableBehavior,
+        Plutonium.CmsFieldBehaviorImpl
+    ];
+</script>
