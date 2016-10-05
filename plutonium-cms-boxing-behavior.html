@@ -30,16 +30,16 @@
             'iron-resize': 'onSizeChanged'
         },
         onSizeChanged: function () {
-            console.log(this.is, 'model size changed to', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parentNode.offsetWidth + 'x' + this.parentNode.offsetHeight);
-            this._width = this.parentNode.offsetWidth;
-            this._height = this.parentNode.offsetHeight;
+            console.log(this.is, 'model size changed to', this.contentModel.width + 'x' + this.contentModel.height, ' against ', this.parent.offsetWidth + 'x' + this.parent.offsetHeight);
+            this._width = this.parent.offsetWidth;
+            this._height = this.parent.offsetHeight;
         },
-        computeEffectiveWidth: function(width, offsetWidth) {
+        computeEffectiveWidth: function (width, offsetWidth) {
             console.log(this.is, 'WIDTH', width, offsetWidth);
             // TODO: add ass mixin.
-            return ((width > offsetWidth) ? offsetWidth : width);
+            return ((width < offsetWidth) ? width : offsetWidth);
         },
-        computeEffectiveHeight: function(width, height, offsetWidth) {
+        computeEffectiveHeight: function (width, height, offsetWidth) {
             console.log(this.is, 'HEIGHT', height);
             return Math.round((offsetWidth * height) / width);
         },
@@ -60,6 +60,12 @@
 //            } catch (s) {
 //                console.error(s);
 //            }
+        },
+        get parent() {
+            if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                return this.parentNode.host;
+            }
+            return this.parentNode;
         }
     };
     Plutonium.CmsBoxingBehavior = [
