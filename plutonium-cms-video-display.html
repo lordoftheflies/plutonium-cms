@@ -54,6 +54,11 @@ CMS related components.
                 'observeVideoUrl(contentModel.data)',
                 '_observeSize(contentModel.width, contentModel.height)'
             ],
+            listeners: {
+                'webkitfullscreenchange': 'onFullScreen',
+                'fullscreenchange': 'onFullScreen',
+                'mozfullscreenchange': 'onFullScreen'
+            },
             ready: function () {
 //                this.$.player.mediaelementplayer(/* Options */);
             },
@@ -78,6 +83,10 @@ CMS related components.
 
                 //                this.$.contentModelData.innerHTML = data;
             },
+            onFullScreen: function(event, details) {
+                console.log(this.is, 'go to fullscreen');
+                this.fire('plutonium-fullscreen', {});
+            }
         });
     </script>
 </dom-module>
