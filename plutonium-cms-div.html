@@ -48,6 +48,7 @@ CMS related components.
                 'sectionsAddedOrRemoved(contentModel.sections.*)'
             ],
             attached: function () {
+                console.debug(this.is, 'attached');
 //                this.contentModel.sections.forEach(function (s, index) {
 //                    var display = document.createElement(this.identifyDisplay(s.type));
 //                    display.id = 'contentSection' + index;
@@ -58,6 +59,7 @@ CMS related components.
 //                }, this);
             },
             detached: function () {
+                console.debug(this.is, 'detached');
                 var children = this.$.contentContainer.children;
                 for (var i = 0; i < children.length; i++) {
                     this.$.contentContainer.removeChild(children[i]);
@@ -66,24 +68,25 @@ CMS related components.
             sectionsAddedOrRemoved: function (changeRecord) {
                 if (changeRecord.splices) {
                     changeRecord.splices.indexSplices.forEach(function (s) {
-                        s.removed.forEach(function (user, index) {
-                            console.log(user.name + ' was removed');
+                        s.removed.forEach(function (section, index) {
+                            console.debug(this.is, 'remove section', (section.name) ? ('section[' + section.type + ',' + section.name + ']') : 'transient', 'from position', index);
                             this.$.contentContainer.removeChild(this.$$('#contentSection' + index));
                         });
                         for (var i = 0; i < s.addedCount; i++) {
                             var index = s.index + i;
-                            var newUser = s.object[index];
-                            console.log('section ' + newUser.name + ' added at index ' + index);
-
-                            var display = document.createElement(this.identifyDisplay(newUser.type));
+                            var section = s.object[index];
+                            var display = document.createElement(this.identifyDisplay(section.type));
                             display.id = 'contentSection' + index;
                             display.contentModel = this.contentModel;
                             display.verticalAlign = 'auto';
                             display.horizontalAlign = 'auto';
                             this.$.contentContainer.appendChild(display);
+
+                            console.debug(this.is, 'add section', (section.name) ? ('section[' + section.type + ',' + section.name + ']') : 'transient', 'from position', index);
                         }
                     }, this);
                 } else {
+                    console.debug(this.is, 'initialize', changeRecord);
 
                     var children = this.$.contentContainer.children;
                     for (var i = 0; i < children.length; i++) {
@@ -91,12 +94,14 @@ CMS related components.
                     }
 
                     changeRecord.value.forEach(function (s, index) {
-                        var display = document.createElement(this.identifyDisplay(s.type));
-                        display.id = 'contentSection' + index;
-                        display.contentModel = s;
-                        display.verticalAlign = 'auto';
-                        display.horizontalAlign = 'auto';
-                        this.$.contentContainer.appendChild(display);
+                        var section = document.createElement(this.identifyDisplay(s.type));
+                        section.id = 'contentSection' + index;
+                        section.contentModel = s;
+                        section.verticalAlign = 'auto';
+                        section.horizontalAlign = 'auto';
+                        this.$.contentContainer.appendChild(section);
+                        console.debug(this.is, 'add section', (section.name) ? ('section[' + section.type + ',' + section.name + ']') : 'transient', 'from position', index);
+
                     }, this);
 
                 }
