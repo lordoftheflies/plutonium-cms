@@ -93,17 +93,22 @@ CMS related components.
 //                    for (var i = 0; i < children.length; i++) {
 //                        this.$.contentContainer.removeChild(children[i]);
 //                    }
-//
-//                    changeRecord.value.forEach(function (s, index) {
-//                        var section = document.createElement(this.identifyDisplay(s.type));
-//                        section.id = 'contentSection' + index;
-//                        section.contentModel = s;
-//                        section.verticalAlign = 'auto';
-//                        section.horizontalAlign = 'auto';
-//                        this.$.contentContainer.appendChild(section);
-//                        console.debug(this.is, 'add section', (section.name) ? ('section[' + section.type + ',' + section.name + ']') : 'transient', 'from position', index);
-//
-//                    }, this);
+//                    
+                    while (this.$.contentContainer.firstChild) {
+                        //The list is LIVE so it will re-index each call
+                        this.$.contentContainer.removeChild(this.$.contentContainer.firstChild);
+                    }
+
+                    changeRecord.value.forEach(function (s, index) {
+                        var section = document.createElement(this.identifyDisplay(s.type));
+                        section.id = 'contentSection' + index;
+                        section.contentModel = s;
+                        section.verticalAlign = 'auto';
+                        section.horizontalAlign = 'auto';
+                        this.$.contentContainer.appendChild(section);
+                        console.debug(this.is, 'add section', (section.name) ? ('section[' + section.type + ',' + section.name + ']') : 'transient', 'from position', index);
+
+                    }, this);
 
                 }
 
