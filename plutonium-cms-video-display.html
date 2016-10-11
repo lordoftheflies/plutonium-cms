@@ -40,6 +40,11 @@ CMS related components.
     </template>
 
     <script>
+        function onBlurVideo() {
+            document.querySelector('#videoDisplay').pause();
+            //do something here 
+        }
+
         Polymer({
             is: 'plutonium-cms-video-display',
             behaviors: [
@@ -59,15 +64,16 @@ CMS related components.
                 'webkitfullscreenchange': 'onFullScreen',
                 'fullscreenchange': 'onFullScreen',
                 'mozfullscreenchange': 'onFullScreen',
-                'videoDisplay.blur': 'onBlur'
+//                'videoDisplay.blur': 'onBlur'
             },
-            ready: function () {
+            attached: function () {
                 var self = this;
-                window.addEventListener('blur', function () {
-                    document.querySelector('#videoDisplay').pause();
-                    //do something here 
-                }, false);
+                window.addEventListener('blur', onBlurVideo, false);
 //                this.$.player.mediaelementplayer(/* Options */);
+            },
+            detached: function () {
+                window.removeEventListener("blur", onBlurVideo);
+
             },
             _observeSize: function (width, height) {
                 this.updateStyles();
@@ -101,10 +107,10 @@ CMS related components.
                 console.log(this.is, 'go to fullscreen');
                 this.fire('plutonium-fullscreen', {});
             },
-            onBlur: function (event, details) {
-                document.querySelector(details.id).stop();
-                console.log(this.is, 'blurred');
-            },
+//            onBlur: function (event, details) {
+//                document.querySelector(details.id).stop();
+//                console.log(this.is, 'blurred');
+//            },
             onFocus: function (event, details) {
                 document.querySelector(details.id).start();
             }
