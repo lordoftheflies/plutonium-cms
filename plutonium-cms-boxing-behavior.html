@@ -6,6 +6,10 @@
 <script>
 
     window.Plutonium = window.Plutonium || {};
+
+    /**
+     * @polymerBehavior
+     */
     Plutonium.CmsBoxingBehaviorImpl = {
         properties: {
             contentModel: {
@@ -68,6 +72,10 @@
             return this.parentNode;
         }
     };
+
+    /**
+     * @polymerBehavior
+     */
     Plutonium.CmsBoxingBehavior = [
         Polymer.IronFitBehavior,
         Plutonium.CmsBoxingBehaviorImpl,
