@@ -18,6 +18,12 @@ CMS related components.
 
 
             }
+            
+            :focus {
+                border-color: red;
+                border-width: medium;
+            }
+            
             // TODO: add as mixin
             /*            :host div.container {
                             @apply(--layout-vertical);
@@ -31,19 +37,15 @@ CMS related components.
         </style>
         <h2>[[contentModel.title]]</h2>
         <div class="layout vertical center">
-            <video id="videoDisplay" width="[[_effectiveWidth]]" height="[[_effectiveHeight]]" src="{{videoSrc}}" type="video/mp4" 
-                   controls="true" preload="auto"  autobuffer
-                   on-blur="onBlur">
+            <video id="videoDisplay" onblur="onBlur" on-blur="onBlur" width="[[_effectiveWidth]]" height="[[_effectiveHeight]]" src="{{videoSrc}}" type="video/mp4" 
+                   controls="true" preload="auto"  autobuffer>
+                <source src="{{videoSrc}}" type="video/mp4" />
                 This browser does not support HTML5.
             </video>
         </div>
     </template>
 
     <script>
-        function onBlurVideo() {
-            console.debug(this.is, 'blur');
-            document.querySelector('#videoDisplay').pause();
-        }
 
         Polymer({
             is: 'plutonium-cms-video-display',
@@ -64,16 +66,18 @@ CMS related components.
                 'webkitfullscreenchange': 'onFullScreen',
                 'fullscreenchange': 'onFullScreen',
                 'mozfullscreenchange': 'onFullScreen',
-//                'videoDisplay.blur': 'onBlur'
+                'tap': 'onToggle',
+                'blur': 'onBlur',
+                'videoDisplay.blur': 'onBlur'
             },
             attached: function () {
                 console.debug(this.is, 'attached');
-                window.addEventListener('blur', onBlurVideo, false);
-//                this.$.player.mediaelementplayer(/* Options */);
+                this.addEventListener("blur", this.onBlur, true);
+                this.listen(this, 'blur', 'onBlur');
             },
             detached: function () {
                 console.debug(this.is, 'detached');
-                window.removeEventListener('blur', onBlurVideo);
+                this.unlisten(this, 'blur', 'onBlur');
             },
             _observeSize: function (width, height) {
                 this.updateStyles();
@@ -107,12 +111,17 @@ CMS related components.
                 console.log(this.is, 'go to fullscreen');
                 this.fire('plutonium-fullscreen', {});
             },
-//            onBlur: function (event, details) {
-//                document.querySelector(details.id).stop();
-//                console.log(this.is, 'blurred');
-//            },
-            onFocus: function (event, details) {
-                document.querySelector(details.id).start();
+            onBlur: function (event, details) {
+                console.debug(this.is, 'blur');
+                this.$.videoDisplay.pause();
+            },
+            onToggle: function (event, details) {
+                if (this.$.videoDisplay.paused) {
+                    this.$.videoDisplay.play();
+                } else {
+                    this.$.videoDisplay.pause();
+                }
+                
             }
         });
     </script>
