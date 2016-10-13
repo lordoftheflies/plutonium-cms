@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 
 <link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../paper-progress/paper-progress.html">
 
 <link rel="import" href="plutonium-cms-boxing-behavior.html">
 <!--
@@ -18,12 +19,11 @@ CMS related components.
 
 
             }
-            
+
             :focus {
-                border-color: red;
-                border-width: medium;
+                outline: none !important;
             }
-            
+
             // TODO: add as mixin
             /*            :host div.container {
                             @apply(--layout-vertical);
@@ -37,9 +37,11 @@ CMS related components.
         </style>
         <h2>[[contentModel.title]]</h2>
         <div class="layout vertical center">
-            <video id="videoDisplay" onblur="onBlur" on-blur="onBlur" width="[[_effectiveWidth]]" height="[[_effectiveHeight]]" src="{{videoSrc}}" type="video/mp4" 
+            <!--<paper-progress min="0" max="100" value="{{dataLoadingProgress}}"></paper-progress>-->
+
+            <video id="videoDisplay" width="[[_effectiveWidth]]" height="[[_effectiveHeight]]" src="{{videoSrc}}" type="video/mp4" 
                    controls="true" preload="auto"  autobuffer>
-                <source src="{{videoSrc}}" type="video/mp4" />
+                <!--<source src="{{videoSrc}}" type="video/mp4" />-->
                 This browser does not support HTML5.
             </video>
         </div>
@@ -53,6 +55,11 @@ CMS related components.
                 Plutonium.CmsBoxingBehavior
             ],
             properties: {
+                dataLoadingProgress: {
+                    type: Number,
+                    notify: true,
+                    value: 0
+                },
                 prop1: {
                     type: String,
                     value: 'plutonium-cms-video-display',
@@ -67,17 +74,20 @@ CMS related components.
                 'fullscreenchange': 'onFullScreen',
                 'mozfullscreenchange': 'onFullScreen',
                 'tap': 'onToggle',
-                'blur': 'onBlur',
-                'videoDisplay.blur': 'onBlur'
+//                'blur': 'onBlur',
+                'videoDisplay.blur': 'onBlur',
+//                'videoDisplay.progress': 'onUpdateLoadingStatus',
+                'videoDisplay.play': 'onPlay',
+//                'videoDisplay.canplaythrough': 'onAutoStart'
             },
             attached: function () {
                 console.debug(this.is, 'attached');
-                this.addEventListener("blur", this.onBlur, true);
-                this.listen(this, 'blur', 'onBlur');
+//                this.addEventListener("blur", this.onBlur, true);
+//                this.listen(this, 'blur', 'onBlur');
             },
             detached: function () {
                 console.debug(this.is, 'detached');
-                this.unlisten(this, 'blur', 'onBlur');
+//                this.unlisten(this, 'blur', 'onBlur');
             },
             _observeSize: function (width, height) {
                 this.updateStyles();
@@ -111,6 +121,19 @@ CMS related components.
                 console.log(this.is, 'go to fullscreen');
                 this.fire('plutonium-fullscreen', {});
             },
+//            onUpdateLoadingStatus: function (event, details) {
+//                if (this.$.videoDisplay.buffered.length > 0) {
+//                    // Update preloaging percentage.
+//                    this.dataLoadingProgress = parseInt(((this.$.videoDisplay.buffered.end(0) / this.$.videoDisplay.duration) * 100));
+//                }
+//            },
+//            onAutoStart: function (event, details) {
+//                this.$.videoDisplay.play();
+//            },
+            onPlay: function (event, details) {
+                console.debug(this.is, 'set focus');
+                this.$.videoDisplay.focus();
+            },
             onBlur: function (event, details) {
                 console.debug(this.is, 'blur');
                 this.$.videoDisplay.pause();
@@ -121,7 +144,7 @@ CMS related components.
                 } else {
                     this.$.videoDisplay.pause();
                 }
-                
+
             }
         });
     </script>
