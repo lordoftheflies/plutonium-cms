@@ -1,6 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../plutonium-i18n-controls/plutonium-i18n-input.html">
+<link rel="import" href="../plutonium-i18n-controls/plutonium-i18n-textarea.html">
 
 <link rel="import" href="plutonium-cms-overlay-behavior.html">
 <!--
@@ -26,8 +28,8 @@ CMS related components.
             }
         </style>
         <div class="card-content">
-            <paper-input id="titleInput" label="Title" name="title" value="{{contentModel.title}}" required auto-validate></paper-input>
-            <paper-textarea id="dataInput" label="Text" name="data" value="{{contentModel.data}}"></paper-textarea>
+            <plutonium-i18n-input id="titleInput" label="Title" name="title" value="{{contentModel.title}}" source-lang="[[sourceLang]]" locales="[[locales]]" required auto-validate></plutonium-i18n-input>
+            <plutonium-i18n-textarea id="dataInput" label="Text" name="data" value="{{contentModel.data}}" source-lang="[[sourceLang]]" locales="[[locales]]"></plutonium-i18n-textarea>
         </div>
     </template>
 
@@ -42,6 +44,14 @@ CMS related components.
                     type: Object,
                     notify: true,
                 },
+                locales: {
+                    type: Array,
+                    value: [{lang: 'de', value: ''}, {lang: 'en', value: ''}, {lang: 'po', value: ''}, {lang: 'hu', value: ''}]
+                },
+                sourceLang: {
+                    type: String,
+                    value: 'en'
+                }
             },
             _getValidity: function (value) {
                 var v = (this.$.titleInput.validate() &&

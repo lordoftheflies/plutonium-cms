@@ -19,7 +19,10 @@
     "paper-dialog-scrollable": "polymerelements/paper-dialog-scrollable#^1.1.5",
     "iron-fit-behavior": "^1.2.5",
     "iron-resizable-behavior": "^1.0.5",
-    "paper-progress": "polymerelements/paper-progress#^1.0.11"
+    "paper-progress": "polymerelements/paper-progress#^1.0.11",
+    "paper-tabs": "^1.7.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^1.3.0",
+    "plutonium-i18n-controls": "lordoftheflies/plutonium-i18n-controls"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
